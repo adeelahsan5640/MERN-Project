@@ -6,7 +6,7 @@ import decode from 'jwt-decode';
 import { searchPosts, getPosts } from '../../actions/posts'
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 
-import memories from '../../images/memories.png';
+import olxlogo from '../../images/logo.svg';
 import * as actionType from '../../constants/actionTypes';
 import useStyles from './styles';
 import Media from 'react-media';
@@ -62,8 +62,9 @@ const Navbar = () => {
 
                 <AppBar className={classes.appBar2} position="static" color="inherit">
                   <div>
-                    <Typography component={Link} onClick={dispatch(getPosts())} to="/" className={classes.heading} variant="h3" align="center">Memories</Typography>
-                    {/* <img className={classes.image} src={memories} alt="icon" height="60" /> */}
+                    <Typography component={Link} onClick={dispatch(getPosts())} to="/" className={classes.heading} variant="h3" align="center">
+                      <img className={classes.image} src={olxlogo} alt="icon" height="60" />
+                    </Typography>
                     <TextField className={classes.SearchText} value={search} onChange={updateSearch}></TextField>
                     <Button onClick={searchPost}><SearchOutlinedIcon /></Button>
 
@@ -95,8 +96,9 @@ const Navbar = () => {
                   <AppBar className={classes.appBar2} position="static" color="inherit">
 
                     <div className={classes.SearchBar}>
-                      <Typography component={Link} to="/" className={classes.heading} variant="h2" align="center">Memories</Typography>
-                      {/* <img className={classes.image} src={memories} alt="icon" height="60" /> */}
+                      <Typography component={Link} to="/" className={classes.heading} variant="h2" align="center">
+                      <img className={classes.image} src={olxlogo} alt="icon" height="60" />
+                      </Typography>
                       <TextField value={search} onChange={updateSearch}></TextField>
                       <Button onClick={searchPost}><SearchOutlinedIcon /></Button>
                     </div>
