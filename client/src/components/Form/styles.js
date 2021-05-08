@@ -21,4 +21,21 @@ export default makeStyles((theme) => ({
   buttonSubmit: {
     marginBottom: 10,
   },
+  span: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  price: {
+    maxWidth: "190px",
+    minWidth: "120px",
+    marginRight: "15px"
+  },
+  category: {
+    maxWidth: "500px",
+    minWidth: "120px",
+    marginLeft: "15px",
+    marginRight: "1px"
+
+  },
 }));

@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { deepPurple } from '@material-ui/core/colors';
+import { blue, deepPurple } from '@material-ui/core/colors';
 
 export default makeStyles((theme) => ({
   appBar: {
@@ -32,6 +32,8 @@ export default makeStyles((theme) => ({
   },
   image: {
     marginLeft: '15px',
+    marginRight: '250px',
+    marginTop: '10px'
   },
   toolbar: {
     display: 'flex',
@@ -45,10 +47,10 @@ export default makeStyles((theme) => ({
   },
   profile2: {
     display: 'flex',
-    flexDirection:"row",
+    flexDirection: "row",
     justifyContent: 'space-between',
     alignItems: 'center'
-    },
+  },
   userName: {
     display: 'flex',
     alignItems: 'center',
@@ -61,7 +63,7 @@ export default makeStyles((theme) => ({
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
   },
-  SearchText:{
-    maxWidth:'80px'
+  SearchText: {
+    maxWidth: '80px'
   }
 }));

@@ -89,7 +89,13 @@ export const searchPost=async (req,res,next)=>{
     const { id } = req.params;
 
     try {
-        const post = await PostMessage.find({title:{$regex:id,$options:'$i'}});
+       // const post = await PostMessage.find({title:{$regex:id,$options:'$i'}});
+       const post = await postads.find(
+        {$and:[
+            {title:{$regex:val[0],$options:'$i'}},
+            {category:{$regex:val[1],$options:'$i'}}
+        ]}
+    )
         res.status(200).json(post);
     } catch (error) {
         res.status(404).json({ message: error.message });

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AppBar, Typography, Toolbar, Avatar, Button, TextField } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import decode from 'jwt-decode';
@@ -12,7 +13,9 @@ import useStyles from './styles';
 import Media from 'react-media';
 
 const Navbar = () => {
+  const category = [{title:''},{ title: `Vehicles` }, { title: `Property` }, { title: `Electronics` }, { title: `Services` }];
   const [search, setSearch] = useState("");
+  const [cat,setCat]=useState({title:""});
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const dispatch = useDispatch();
   const posts = useSelector(state => state.posts)
@@ -65,7 +68,14 @@ const Navbar = () => {
                     <Typography component={Link} onClick={dispatch(getPosts())} to="/" className={classes.heading} variant="h3" align="center">
                       <img className={classes.image} src={olxlogo} alt="icon" height="60" />
                     </Typography>
-                    <TextField className={classes.SearchText} value={search} onChange={updateSearch}></TextField>
+                    <Autocomplete
+                        id="combo-box-demo"
+                        options={category}
+                        getOptionLabel={(option) => search !== "" ? (option.title==""?search:"find " + search + " in " + option.title) : option.title}
+                        className={classes.SearchText}
+                        onChange={(e,v)=>setCat(v)}
+                        renderInput={(params) => <TextField {...params} value={""} label="Search" onChange={updateSearch} />}
+                      />
                     <Button onClick={searchPost}><SearchOutlinedIcon /></Button>
 
                   </div>
@@ -99,7 +109,15 @@ const Navbar = () => {
                       <Typography component={Link} to="/" className={classes.heading} variant="h2" align="center">
                       <img className={classes.image} src={olxlogo} alt="icon" height="60" />
                       </Typography>
-                      <TextField value={search} onChange={updateSearch}></TextField>
+                      <Autocomplete
+                        className={classes.SearchBar}
+                        id="combo-box-demo"
+                        options={category}
+                        getOptionLabel={(option) => search !== "" ? (option.title==""?search:"find " + search + " in " + option.title) : option.title}
+                        style={{ minWidth: "200px", maxWidth: "300px" }}
+                        onChange={(e,v)=>setCat(v)}
+                        renderInput={(params) => <TextField {...params} value={""} label="Search" onChange={updateSearch} />}
+                      />
                       <Button onClick={searchPost}><SearchOutlinedIcon /></Button>
                     </div>
 
