@@ -8,7 +8,7 @@ import { createPost, updatePost } from '../../actions/posts';
 
 function Form({ currentId, setCurrentId }) {
     const [postData, setPostData] = useState({
-        title: '', message: '', tags: '', selectedFile: ''
+        title: '', description: '', price: 0, category: '', phoneno: '', selectedFile: ''
     });
     const user = JSON.parse(localStorage.getItem('profile'));
     const post = useSelector(state => currentId ? state.posts.find((p) => p._id === currentId) : null)
@@ -32,7 +32,7 @@ function Form({ currentId, setCurrentId }) {
     const clear = () => {
         setCurrentId(null);
         setPostData({
-            title: '', message: '', tags: '', selectedFile: ''
+            title: '', description: '', price: 0, category: '', phoneno: '', selectedFile: ''
         });
         setImage("");
     }
@@ -67,24 +67,24 @@ function Form({ currentId, setCurrentId }) {
             <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <Typography varient="h6">{currentId ? `Edit` : 'Post'} Your Ad</Typography>
                 <TextField name="title" variant="outlined" label="Ad title" fullWidth value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })} />
-                <TextField name="message"  variant="outlined" label="Description" fullWidth multiline rows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
+                <TextField name="description" variant="outlined" label="Description" fullWidth multiline rows={4} value={postData.description} onChange={(e) => setPostData({ ...postData, description: e.target.value })} />
                 <span className={classes.span}>
-                <TextField name="tags" className={classes.price} variant="outlined" label="Price" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value })} />
-                <FormControl className={classes.category}>
-                    <InputLabel htmlFor="age-native-helper" fullWidth >Category</InputLabel>
-                    <NativeSelect
-                        value={postData.category}
-                        onChange={(e) => setPostData({ ...postData, category: e.target.value })}>
-                        <option aria-label="None" value="" />
-                        <option value={"Vehicles"}>Vehicles</option>
-                        <option value={"Electronics"}>Electronics</option>
-                        <option value={"Property"}>Property</option>
-                        <option value={"Services"}>Services</option>
-                    </NativeSelect>
-                    <FormHelperText>Select suitable category.</FormHelperText>
-                </FormControl>
+                    <TextField name="price" className={classes.price} variant="outlined" label="Price" fullWidth value={postData.price} onChange={(e) => setPostData({ ...postData, price: e.target.value })} />
+                    <FormControl className={classes.category}>
+                        <InputLabel htmlFor="age-native-helper" fullWidth >Category</InputLabel>
+                        <NativeSelect
+                            value={postData.category}
+                            onChange={(e) => setPostData({ ...postData, category: e.target.value })}>
+                            <option aria-label="None" value="" />
+                            <option value={"Vehicles"}>Vehicles</option>
+                            <option value={"Electronics"}>Electronics</option>
+                            <option value={"Property"}>Property</option>
+                            <option value={"Services"}>Services</option>
+                        </NativeSelect>
+                        <FormHelperText>Select suitable category.</FormHelperText>
+                    </FormControl>
                 </span>
-                <TextField name="Phoneno" variant="outlined" label="Phone#" fullWidth  onChange={()=>{} } />
+                <TextField name="Phoneno" variant="outlined" label="Phone#" fullWidth value={postData.phoneno} onChange={(e) => setPostData({...postData,phoneno:e.target.value})} />
                 <div className={classes.fileInput}>
                     {/* <FileBase type="file" multiple={false} onDone={(base64)=>setPostData({...postData,selectedFile:base64})}/> */}
                     <input value={image} type="file" multiple={false} onChange={(e) => { uploadImage(e) }} />

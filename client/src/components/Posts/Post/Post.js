@@ -25,10 +25,10 @@ const Post = ({ post, setCurrentId }) => {
 
     return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
   };
-  const displayTags = (p = post.tags) => {
-    const t = p[0].split(" ");
-    return t.map((tag) => tag[0] !== "Rs. " ? `Rs. ${tag} ` : `${tag} `)
-  }
+  // const displayTags = (p = post.tags) => {
+  //   const t = p[0].split(" ");
+  //   return t.map((tag) => tag[0] !== "Rs. " ? `Rs. ${tag} ` : `${tag} `)
+  // }
   return (
     <Card className={classes.card}>
       <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
@@ -44,11 +44,13 @@ const Post = ({ post, setCurrentId }) => {
           </Button>)}
       </div>
       <div className={classes.details}>
-        <Typography variant="h5" color="textSecondary">{displayTags()}</Typography>
+        <Typography variant="h5" color="textSecondary">{`Rs. ${post.price}`}</Typography>
+        <Typography variant="h5" color="textSecondary">{post.category}</Typography>
       </div>
       <Typography className={classes.title} variant="h5">{post.title}</Typography>
       <CardContent>
-        <Typography variant="body2" color="textSecondary">{post.message}</Typography>
+        <Typography variant="body2" color="textSecondary">{post.description}</Typography><br/>
+        <Typography variant="body2" color="textSecondary">{`Contact no: ${post.phoneno}`}</Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
         <Button size="small" color="primary" disabled={!user?.result} onClick={() => dispatch(likePost(post._id))}>

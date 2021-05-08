@@ -31,7 +31,7 @@ export default makeStyles((theme) => ({
     textDecoration: 'none',
   },
   image: {
-    marginLeft: '15px',
+    marginLeft: '5px',
     marginRight: '250px',
     marginTop: '10px'
   },

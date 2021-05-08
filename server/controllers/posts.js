@@ -1,26 +1,26 @@
 import express from 'express';
 import mongoose from 'mongoose';
 
-import PostMessage from '../models/postMessage.js';
+import postads from '../models/postAds.js';
 
 const router = express.Router();
 
-export const getPosts = async (req, res) => { 
+export const getPosts = async (req, res) => {
     try {
-        const postMessages = await PostMessage.find();
-                
-        res.status(200).json(postMessages);
+        const postadss = await postads.find();
+
+        res.status(200).json(postadss);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 }
 
-export const getPost = async (req, res) => { 
+export const getPost = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const post = await PostMessage.findById(id);
-        
+        const post = await postads.findById(id);
+
         res.status(200).json(post);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -30,26 +30,26 @@ export const getPost = async (req, res) => {
 export const createPost = async (req, res) => {
     const post = req.body;
 
-    const newPostMessage = new PostMessage({ ...post, creator: req.userId, createdAt: new Date().toISOString() })
+    const newpostads = new postads({ ...post, creator: req.userId, createdAt: new Date().toISOString() })
 
     try {
-        await newPostMessage.save();
+        await newpostads.save();
 
-        res.status(201).json(newPostMessage );
+        res.status(201).json(newpostads);
     } catch (error) {
-        res.status(409).json({ message: error.message });
+        res.status(409).json(error);
     }
 }
 
 export const updatePost = async (req, res) => {
     const { id } = req.params;
-    const { title, message, creator, selectedFile, tags } = req.body;
-    
+    const { title, description, creator, name, selectedFile, price, category, phoneno } = req.body;
+
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
-    const updatedPost = { creator, title, message, tags, selectedFile, _id: id };
+    const updatedPost = { creator, name, title, description, price, category, phoneno, selectedFile, _id: id };
 
-    await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true });
+    await postads.findByIdAndUpdate(id, updatedPost, { new: true });
 
     res.json(updatedPost);
 }
@@ -59,7 +59,7 @@ export const deletePost = async (req, res) => {
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
-    await PostMessage.findByIdAndRemove(id);
+    await postads.findByIdAndRemove(id);
 
     res.json({ message: "Post deleted successfully." });
 }
@@ -69,33 +69,37 @@ export const likePost = async (req, res) => {
 
     if (!req.userId) {
         return res.json({ message: "Unauthenticated" });
-      }
+    }
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
-    
-    const post = await PostMessage.findById(id);
 
-    const index = post.likes.findIndex((id) => id ===String(req.userId));
+    const post = await postads.findById(id);
+
+    const index = post.likes.findIndex((id) => id === String(req.userId));
 
     if (index === -1) {
-      post.likes.push(req.userId);
+        post.likes.push(req.userId);
     } else {
-      post.likes = post.likes.filter((id) => id !== String(req.userId));
+        post.likes = post.likes.filter((id) => id !== String(req.userId));
     }
-    const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });
+    const updatedPost = await postads.findByIdAndUpdate(id, post, { new: true });
     res.status(200).json(updatedPost);
 }
-export const searchPost=async (req,res,next)=>{
+export const searchPost = async (req, res, next) => {
     const { id } = req.params;
-
+    const val = id.split("th3");
     try {
-       // const post = await PostMessage.find({title:{$regex:id,$options:'$i'}});
-       const post = await postads.find(
-        {$and:[
-            {title:{$regex:val[0],$options:'$i'}},
-            {category:{$regex:val[1],$options:'$i'}}
-        ]}
-    )
+        //postads.ensureIndex({"title":"text","category":"text"})
+        //const post=postads.runCommand("text",{search:`${val[0]} ${val[1]}`})
+        //const post = await postads.find({title:{$regex:val[0],$options:'$i'}});
+        const post = await postads.find(
+            {
+                $and: [
+                    { title: { $regex: val[0], $options: '$i' } },
+                    { category: { $regex: val[1], $options: '$i' } }
+                ]
+            }
+        )
         res.status(200).json(post);
     } catch (error) {
         res.status(404).json({ message: error.message });
