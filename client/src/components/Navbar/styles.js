@@ -20,6 +20,16 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
     padding: '10px 15px',
   },
+  appBarMobile:{
+    borderRadius:15,
+    display:'flex',
+    justifyContent:'space-between',
+    padding:'15px 15px'
+  },
+  button:{
+    padding:'auto',
+    alignItems:'center'
+  },
   SearchBar: {
     display: 'flex',
     flexDirection: 'row',

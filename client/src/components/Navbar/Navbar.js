@@ -23,7 +23,8 @@ const Navbar = () => {
   const history = useHistory();
   const classes = useStyles();
   const searchPost = () => {
-    dispatch(searchPosts(search));
+    dispatch(searchPosts(search+"th3"+cat.title));
+    console.log(search+cat.title)
     setSearch("");
   }
   const updateSearch = (event) => {
@@ -63,7 +64,7 @@ const Navbar = () => {
                   </div>
                 </AppBar> */}
 
-                <AppBar className={classes.appBar2} position="static" color="inherit">
+                <AppBar className={classes.appBarMobile} position="static" color="inherit">
                   <div>
                     <Typography component={Link} onClick={dispatch(getPosts())} to="/" className={classes.heading} variant="h3" align="center">
                       <img className={classes.image} src={olxlogo} alt="icon" height="60" />
@@ -74,19 +75,19 @@ const Navbar = () => {
                         getOptionLabel={(option) => search !== "" ? (option.title==""?search:"find " + search + " in " + option.title) : option.title}
                         className={classes.SearchText}
                         onChange={(e,v)=>setCat(v)}
-                        renderInput={(params) => <TextField {...params} value={""} label="Search" onChange={updateSearch} />}
+                        renderInput={(params) => <TextField variant="outlined" style={{width:'320px'}} fullWidth {...params} value={""} label="Search" onChange={updateSearch} />}
                       />
-                    <Button onClick={searchPost}><SearchOutlinedIcon /></Button>
+                    <Button style={{paddingLeft:'290px'}} onClick={searchPost}><SearchOutlinedIcon /></Button>
 
                   </div>
-                  {
+                  <div className={classes.button}>{
                     !user?.result ? (
-                      <Button component={Link} to="/auth" variant="contained" color="primary">Sign In</Button>
+                      <Button  component={Link} to="/auth" variant="contained" color="primary">Sign In</Button>
                     ) :
                       (
                         <Button variant="contained" className={classes.logout} color="secondary" onClick={logout}>Logout</Button>
                       )
-                  }
+                  }</div>
                 </AppBar>
                 {user?.result ? (
                   <AppBar className={classes.appBar} position="static" color="inherit">
@@ -116,7 +117,7 @@ const Navbar = () => {
                         getOptionLabel={(option) => search !== "" ? (option.title==""?search:"find " + search + " in " + option.title) : option.title}
                         style={{ minWidth: "200px", maxWidth: "300px" }}
                         onChange={(e,v)=>setCat(v)}
-                        renderInput={(params) => <TextField {...params} value={""} label="Search" onChange={updateSearch} />}
+                        renderInput={(params) => <TextField variant="outlined" style={{width:'1000px'}} {...params} value={""} label="Search" onChange={updateSearch} />}
                       />
                       <Button onClick={searchPost}><SearchOutlinedIcon /></Button>
                     </div>

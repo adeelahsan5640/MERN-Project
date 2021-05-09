@@ -91,7 +91,7 @@ export const searchPost = async (req, res, next) => {
     try {
         //postads.ensureIndex({"title":"text","category":"text"})
         //const post=postads.runCommand("text",{search:`${val[0]} ${val[1]}`})
-        //const post = await postads.find({title:{$regex:val[0],$options:'$i'}});
+       // const post = await postads.find({title:{$regex:id,$options:'$i'}});
         const post = await postads.find(
             {
                 $and: [
